@@ -1,11 +1,12 @@
-package main
+package GoBot
 
 import (
 	"os/exec"
 	"strconv"
 )
 
-type GoBot struct {
+//need init struct for using methods
+type Bot struct {
 	/*
 		Only linux-Ubuntu
 		used package xautomation
@@ -38,52 +39,79 @@ type GoBot struct {
 	Super_R   string "Super_R"
 }
 
-func (gb *GoBot) cmd(line string) error {
+// inner method call func from terminal
+func (gb *Bot) cmd(line string) error {
 	_, err := exec.Command("xte", line).Output()
 	return err
 }
 
-func (gb *GoBot) MouseMove(x, y int) error {
+//set cursor position x y
+func (gb *Bot) MouseMove(x, y int) error {
 	return gb.cmd("mousemove" + " " + strconv.Itoa(x) + " " + strconv.Itoa(y))
 }
 
-func (gb *GoBot) MouseClick(x, y int) error {
+// set cursor position and click
+func (gb *Bot) MouseClick(x, y int) error {
 	return gb.cmd("mouseclick" + " " + strconv.Itoa(x) + " " + strconv.Itoa(y))
 }
 
-func (gb *GoBot) MouseRelativeMove(x, y int) error {
+//set curson position x y relative
+func (gb *Bot) MouseRelativeMove(x, y int) error {
 	return gb.cmd("mousermove" + " " + strconv.Itoa(x) + " " + strconv.Itoa(y))
 }
 
-func (gb *GoBot) MouseDown(keyMouse int) error {
+//mouse key down :
+//1 - left key
+//2 - midle key
+//3 - right key
+func (gb *Bot) MouseDown(keyMouse int) error {
 	return gb.cmd("mousedown" + " " + strconv.Itoa(keyMouse))
 }
 
-func (gb *GoBot) MouseUp(keyMouse int) error {
+//mouse key up :
+//1 - left key
+//2 - midle key
+//3 - right key
+func (gb *Bot) MouseUp(keyMouse int) error {
 	return gb.cmd("mouseup" + " " + strconv.Itoa(keyMouse))
 }
 
-func (gb *GoBot) KeyPress(key string) error {
+//key press
+//using special key:
+//KeyPress(GoBot.Escape)
+//KeyPress(GoBot.Home)
+func (gb *Bot) KeyPress(key string) error {
 	// ru key -- false (?)
 	return gb.cmd("key" + " " + key)
 }
 
-func (gb *GoBot) KeyDown(key string) error {
+//key down - long
+//using special key:
+//KeyPress(GoBot.Escape)
+//KeyPress(GoBot.Home)
+func (gb *Bot) KeyDown(key string) error {
 	return gb.cmd("keydown" + " " + key)
 }
 
-func (gb *GoBot) KeyUp(key string) error {
+//key up
+//using special key:
+//KeyPress(GoBot.Escape)
+//KeyPress(GoBot.Home)
+func (gb *Bot) KeyUp(key string) error {
 	return gb.cmd("keyup" + " " + key)
 }
 
-func (gb *GoBot) SleepSec(sec int) error {
+//sleeping seconds
+func (gb *Bot) SleepSec(sec int) error {
 	return gb.cmd("sleep" + " " + strconv.Itoa(sec))
 }
 
-func (gb *GoBot) SleepMicro(sec int) error {
+//sleeping milliseconds
+func (gb *Bot) SleepMicro(sec int) error {
 	return gb.cmd("usleep" + " " + strconv.Itoa(sec))
 }
 
-func (gb *GoBot) WriteLine(line string) error {
+//write string line in field input
+func (gb *Bot) WriteLine(line string) error {
 	return gb.cmd("str" + " " + line)
 }
