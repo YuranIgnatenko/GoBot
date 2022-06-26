@@ -1,4 +1,4 @@
-package go_bot
+package go_robot
 
 import (
 	"os/exec"
