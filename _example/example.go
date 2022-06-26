@@ -1,6 +1,6 @@
 package main
 
-import . "GoBot"
+import . "go_robot"
 
 func main() {
 	bot := Bot{}
