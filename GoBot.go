@@ -1,11 +1,18 @@
-package go_robot
+package GoBot
 
 import (
 	"os/exec"
 	"strconv"
 )
 
-//need init struct for using methods
+// check installed tools 'xte'
+func init() {
+	if _, err := exec.Command("xte").Output(); err != nil {
+		panic("tools 'xte' not found")
+	}
+}
+
+// need init struct for using methods
 type Bot struct {
 	/*
 		Only linux-Ubuntu
@@ -45,7 +52,7 @@ func (gb *Bot) cmd(line string) error {
 	return err
 }
 
-//set cursor position x y
+// set cursor position x y
 func (gb *Bot) MouseMove(x, y int) error {
 	return gb.cmd("mousemove" + " " + strconv.Itoa(x) + " " + strconv.Itoa(y))
 }
@@ -55,63 +62,63 @@ func (gb *Bot) MouseClick(x, y int) error {
 	return gb.cmd("mouseclick" + " " + strconv.Itoa(x) + " " + strconv.Itoa(y))
 }
 
-//set curson position x y relative
+// set curson position x y relative
 func (gb *Bot) MouseRelativeMove(x, y int) error {
 	return gb.cmd("mousermove" + " " + strconv.Itoa(x) + " " + strconv.Itoa(y))
 }
 
-//mouse key down :
-//1 - left key
-//2 - midle key
-//3 - right key
+// mouse key down :
+// 1 - left key
+// 2 - midle key
+// 3 - right key
 func (gb *Bot) MouseDown(keyMouse int) error {
 	return gb.cmd("mousedown" + " " + strconv.Itoa(keyMouse))
 }
 
-//mouse key up :
-//1 - left key
-//2 - midle key
-//3 - right key
+// mouse key up :
+// 1 - left key
+// 2 - midle key
+// 3 - right key
 func (gb *Bot) MouseUp(keyMouse int) error {
 	return gb.cmd("mouseup" + " " + strconv.Itoa(keyMouse))
 }
 
-//key press
-//using special key:
-//KeyPress(GoBot.Escape)
-//KeyPress(GoBot.Home)
+// key press
+// using special key:
+// KeyPress(GoBot.Escape)
+// KeyPress(GoBot.Home)
 func (gb *Bot) KeyPress(key string) error {
 	// ru key -- false (?)
 	return gb.cmd("key" + " " + key)
 }
 
-//key down - long
-//using special key:
-//KeyPress(GoBot.Escape)
-//KeyPress(GoBot.Home)
+// key down - long
+// using special key:
+// KeyPress(GoBot.Escape)
+// KeyPress(GoBot.Home)
 func (gb *Bot) KeyDown(key string) error {
 	return gb.cmd("keydown" + " " + key)
 }
 
-//key up
-//using special key:
-//KeyPress(GoBot.Escape)
-//KeyPress(GoBot.Home)
+// key up
+// using special key:
+// KeyPress(GoBot.Escape)
+// KeyPress(GoBot.Home)
 func (gb *Bot) KeyUp(key string) error {
 	return gb.cmd("keyup" + " " + key)
 }
 
-//sleeping seconds
+// sleeping seconds
 func (gb *Bot) SleepSec(sec int) error {
 	return gb.cmd("sleep" + " " + strconv.Itoa(sec))
 }
 
-//sleeping milliseconds
+// sleeping milliseconds
 func (gb *Bot) SleepMicro(sec int) error {
 	return gb.cmd("usleep" + " " + strconv.Itoa(sec))
 }
 
-//write string line in field input
+// write string line in field input
 func (gb *Bot) WriteLine(line string) error {
 	return gb.cmd("str" + " " + line)
 }
